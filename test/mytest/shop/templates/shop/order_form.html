@@ -1,0 +1,39 @@
+{% extends "shop/base.html" %}
+{% block content %}
+
+<form method="POST">
+{% csrf_token %}
+    <fieldset>
+        <table class="update_order_tab">
+            <tr>
+                <td>
+                    <p>
+                        Сумма:<br>
+                        {{ form.summa }}<br>
+                        {% for error in form.summa.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Реквизиты:<br>
+                        {{ form.requisite }}<br>
+                        {% for error in form.requisite.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Статус:<br>
+                        {{ form.status }}<br>
+                        {% for error in form.status.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <div>
+                        <button class="cancel_delete_btn" type="submit">Сохранить</button>{% if title == 'Изменить заявку' %} <a class="cancel_delete" href="{% url 'order-delete' object.id %}">Удалить заявку</a>{% endif %}
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</form>
+{% endblock content %}

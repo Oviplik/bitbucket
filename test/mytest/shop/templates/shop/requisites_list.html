@@ -1,0 +1,62 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<h1>Список всех реквизитов</h1>
+<fieldset class="submenu">
+
+        <form action="{% url 'requisites-create' %}" method="get" style="float: right;">
+            <input class="sub_submenu" type="submit" value="Добавить реквизит" />
+        </form>
+        <form action="{% url 'requisites-list' %}" method="get" accept-charset="utf-8" style="float: left; padding-top: 5px;">
+            <input type="text" placeholder="ФИО или телефон" name="poisk">
+            <span><button type="submit">Найти</button></span>
+        </form>
+        <form action="{% url 'requisites-list' %}" method="get" style="float: left; margin-left: 25px; padding-top: 5px;">
+        <select name="orderby"/>
+            <option value="id">По умолчанию</option>
+            <option value="fio">ФИО</option>
+            <option value="fio">Номер тел.</option>
+            <option value="type_paid">Способ оплаты</option>
+            <option value="type_card_account">Тип счета</option>
+            <option value="limit">Лимит</option>
+        </select>
+        <input type="submit" value="Сортировать">
+        </form>
+</fieldset><br/>
+<table class="list-orders">
+    <tr valign="middle">
+        <th>ID</th>
+        <th>ФИО</th>
+        <th>Номер телефона</th>
+        <th>Способ оплаты</th>
+        <th>Тип счета</th>
+        <th>Лимит</th>
+    </tr>
+    {% for req in reqs %}
+    <div>
+    <tr valign="middle" style="cursor: pointer;" onclick="window.location.href='{% url 'requisites-update' req.id %}'; return false">
+        <td>{{req.id}}</td>
+        <td>{{req.fio}}</td>
+        <td>{{req.phone}}</td>
+        <td>{{req.type_paid}}</td>
+        <td>{{req.type_card_account}}</td>
+        <td>{{req.limit}}</td>
+    </tr>
+    </div>
+    {% endfor %}
+</table>
+{% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}

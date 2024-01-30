@@ -1,0 +1,55 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<h1>Список всех заявок</h1>
+<fieldset class="submenu">
+
+        <form action="{% url 'order-create' %}" method="get" style="float: right;">
+            <input class="sub_submenu" type="submit" value="Добавить заявку" />
+        </form>
+        <form action="{% url 'order-list' %}" method="get" accept-charset="utf-8" style="float: left; padding-top: 5px;">
+            <input type="text" placeholder="ID заявки" name="poisk">
+            <span><button type="submit">Найти</button></span>
+        </form>
+        <form action="{% url 'order-list' %}" method="get" style="float: left; margin-left: 25px; padding-top: 5px;">
+        <select name="orderby"/>
+            <option value="id">По умолчанию</option>
+            <option value="summa">Сумма</option>
+            <option value="status">Статус</option>
+        </select>
+        <input type="submit" value="Сортировать">
+        </form>
+</fieldset><br/>
+<table class="list-orders">
+    <tr valign="middle">
+        <th>ID</th>
+        <th>Сумма</th>
+        <th>Реквизиты</th>
+        <th>Статус</th>
+    </tr>
+    {% for order in orders %}
+    <div>
+    <tr valign="middle" style="cursor: pointer;" onclick="window.location.href='{% url 'order-update' order.id %}'; return false">
+        <td>{{order.id}}</td>
+        <td>{{order.summa}}</td>
+        <td>{{order.requisite.all|join:", "}}</td>
+        <td>{%if order.status == 'Оплачена' %}<span style="color: green">Оплачена</span>{% elif order.status == 'Отменена' %}<span style="color: red">Отменена</span>{% else %}Ожидает оплаты{% endif %}</td>
+    </tr>
+    </div>
+    {% endfor %}
+</table>
+{% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}

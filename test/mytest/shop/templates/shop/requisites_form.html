@@ -1,0 +1,53 @@
+{% extends "shop/base.html" %}
+{% block content %}
+
+<form method="POST">
+{% csrf_token %}
+    <fieldset>
+        <table class="update_order_tab">
+            <tr>
+                <td>
+                    <p>
+                        ФИО:<br>
+                        {{ form.fio }}<br>
+                        {% for error in form.fio.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Телефон:<br>
+                        {{ form.phone }}<br>
+                        {% for error in form.phone.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Способ оплаты:<br>
+                        {{ form.type_paid }}<br>
+                        {% for error in form.type_paid.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Тип счета:<br>
+                        {{ form.type_card_account }}<br>
+                        {% for error in form.type_card_account.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Лимит:<br>
+                        {{ form.limit }}<br>
+                        {% for error in form.limit.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <div>
+                        <button class="cancel_delete_btn" type="submit">Сохранить</button>{% if title == 'Изменить реквизит' %} <a class="cancel_delete" href="{% url 'requisites-delete' object.id %}">Удалить заявку</a>{% endif %}
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</form>
+{% endblock content %}

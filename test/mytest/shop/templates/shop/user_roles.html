@@ -1,0 +1,28 @@
+{% extends "shop/base.html" %}
+{% block content %}
+{% if user.is_authenticated %}
+<h1>Список всех пользователей сайта</h1>
+<table class="list-orders">
+    <tr valign="middle">
+        <th>ID</th>
+        <th>Username</th>
+        <th>Роль</th>
+    </tr>
+    {% for user in users %}
+    <div>
+    <tr valign="middle">
+        <td>{{user.id}}</td>
+        <td>{{user.username}}</td>
+        {% if user.is_superuser == 1%}
+        <td><b>Администратор</b></td>
+        {% else %}
+        <td><b>Пользователь</b></td>
+        {% endif %}
+    </tr>
+    </div>
+    {% endfor %}
+</table>
+{% else %}
+<h1>Извините, но просматривать список всех пользователей сайта могут только авторизованные пользователи...</h1>
+{% endif %}
+{% endblock %}

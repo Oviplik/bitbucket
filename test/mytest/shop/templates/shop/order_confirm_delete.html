@@ -1,0 +1,15 @@
+{% extends "shop/base.html" %}
+{% block content %}
+
+<div class="confrim_delet_block">
+<div>
+<form method="POST">
+{% csrf_token %}
+<fieldset>
+    <b>Вы уверены, что хотите удалить заявку <br>№ ID{{ object.id }}?</b>
+</fieldset><br/>
+<button class="cancel_delete_btn" type="submit" style="margin-left: 50px;">Да, хочу удалить</button> <a class="cancel_delete" href="{% url 'order-update' object.id %}">Нет, я передумал</a>
+</form>
+</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,9 @@
+{% extends "shop/base.html" %}
+{% block content %}
+
+<form action="{% url 'api' %}" method="POST" accept-charset="utf-8">
+{% csrf_token %}
+<p>ID заявки</p><input type="text" required class="text-field" size="15" name="api_order"> <button type="submit" style="margin-left: 25px;">Загрузить данные по заявке</button>
+</form>
+<p><a href="{% url 'orders-api' %}">Смотреть API Rest всех заявок</a></p>
+{% endblock %}
